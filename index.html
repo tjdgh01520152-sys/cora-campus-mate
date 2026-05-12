@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campus Mate</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <!-- Login Gate: 앱 진입 전에 가장 먼저 보이는 로그인 전용 화면입니다. -->
+    <section id="login-screen" class="login-screen" aria-label="로그인 화면">
+      <article class="login-card">
+        <div class="login-logo" aria-label="CORA">
+          <span>C</span>
+          <span>O</span>
+          <span>R</span>
+          <span>A</span>
+        </div>
+        <p class="login-subtitle">CORA 공식 홈페이지 관리 체계</p>
+
+        <form id="login-form" class="stack-form">
+          <input id="student-name" name="name" type="hidden" value="CORA 관리자" />
+          <input id="student-id" name="studentId" type="hidden" value="cora-admin" />
+          <input id="department" name="department" type="hidden" value="CORA" />
+          <label class="login-field">
+            <span class="sr-only">이메일</span>
+            <input id="login-email" name="email" type="email" placeholder="cora@korea.ac.kr" autocomplete="username" required />
+          </label>
+          <label class="login-field">
+            <span class="sr-only">비밀번호</span>
+            <input id="login-password" name="password" type="password" placeholder="******" autocomplete="current-password" required />
+          </label>
+          <button type="submit">로그인</button>
+        </form>
+
+      </article>
+    </section>
+
+    <!-- Header: 로고 버튼은 숨겨진 챗봇 패널을 여는 진입점입니다. -->
+    <header class="site-header">
+      <button
+        id="logo-chat-toggle"
+        class="brand-button"
+        type="button"
+        aria-label="챗봇 열기"
+        aria-controls="chat-container"
+        aria-expanded="false"
+      >
+        <span class="brand-mark" aria-hidden="true">CM</span>
+        <span>Campus Mate</span>
+      </button>
+
+      <nav class="site-nav" aria-label="주요 메뉴">
+        <a href="#dashboard">홈</a>
+        <a href="#schedule">시간표</a>
+        <a href="#gpa">학점계산기</a>
+        <a href="#friends">친구창</a>
+      </nav>
+
+      <div class="header-account">
+        <span id="user-chip" class="user-chip">로그인 전</span>
+        <button id="logout-button" class="ghost-button hidden" type="button">로그아웃</button>
+      </div>
+    </header>
+
+    <main class="portal-shell">
+      <!-- Dashboard: 로그인, 오늘 일정, 최근 활동을 한 화면에서 확인합니다. -->
+      <section id="dashboard" class="dashboard-grid">
+        <article class="welcome-panel">
+          <p class="eyebrow">Student Portal</p>
+          <h1>수업, 학점, 친구를 한곳에서 관리하는 캠퍼스 포털</h1>
+          <p>
+            오늘의 수업과 성적 흐름, 친구 상태를 빠르게 확인하고 관리합니다.
+          </p>
+          <div class="quick-stats" aria-label="요약 정보">
+            <div>
+              <strong id="today-count">0</strong>
+              <span>오늘 수업</span>
+            </div>
+            <div>
+              <strong id="gpa-preview">0.00</strong>
+              <span>현재 GPA</span>
+            </div>
+            <div>
+              <strong id="friend-count">0</strong>
+              <span>친구</span>
+            </div>
+          </div>
+        </article>
+
+        <aside class="account-panel" aria-label="계정 정보">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Account</p>
+              <h2>내 계정</h2>
+            </div>
+          </div>
+          <p id="account-summary" class="account-summary">로그인 후 계정 정보가 표시됩니다.</p>
+        </aside>
+
+        <aside id="results" class="activity-panel" aria-label="결과 출력 영역">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Output</p>
+              <h2>최근 활동</h2>
+            </div>
+          </div>
+          <div id="result-summary" class="result-summary">
+            <p class="empty-state">아직 활동이 없습니다.</p>
+          </div>
+        </aside>
+      </section>
+
+      <!-- Schedule: 시간표 항목을 추가하고 주간 그리드로 확인합니다. -->
+      <section id="schedule" class="module-section">
+        <div class="section-heading">
+          <p class="eyebrow">Schedule</p>
+          <h2>시간표</h2>
+        </div>
+
+        <div class="module-grid schedule-layout">
+          <form id="schedule-form" class="tool-panel stack-form">
+            <label>
+              과목명
+              <input id="course-title" name="courseTitle" type="text" placeholder="자료구조" required />
+            </label>
+            <label>
+              요일
+              <select id="course-day" name="courseDay" required>
+                <option value="월">월요일</option>
+                <option value="화">화요일</option>
+                <option value="수">수요일</option>
+                <option value="목">목요일</option>
+                <option value="금">금요일</option>
+              </select>
+            </label>
+            <label>
+              시간
+              <select id="course-time" name="courseTime" required>
+                <option value="09:00">09:00</option>
+                <option value="10:30">10:30</option>
+                <option value="12:00">12:00</option>
+                <option value="13:30">13:30</option>
+                <option value="15:00">15:00</option>
+                <option value="16:30">16:30</option>
+              </select>
+            </label>
+            <label>
+              강의실
+              <input id="course-room" name="courseRoom" type="text" placeholder="공학관 204" required />
+            </label>
+            <button type="submit">시간표 추가</button>
+          </form>
+
+          <div class="table-panel">
+            <div id="timetable-grid" class="timetable-grid" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- GPA: 과목별 학점과 성적을 입력해 평균 평점을 계산합니다. -->
+      <section id="gpa" class="module-section">
+        <div class="section-heading">
+          <p class="eyebrow">Calculator</p>
+          <h2>학점계산기</h2>
+        </div>
+
+        <div class="module-grid gpa-layout">
+          <form id="gpa-form" class="tool-panel stack-form">
+            <label>
+              과목명
+              <input id="grade-course" name="gradeCourse" type="text" placeholder="운영체제" required />
+            </label>
+            <label>
+              이수 학점
+              <select id="grade-credit" name="gradeCredit" required>
+                <option value="1">1학점</option>
+                <option value="2">2학점</option>
+                <option value="3" selected>3학점</option>
+                <option value="4">4학점</option>
+              </select>
+            </label>
+            <label>
+              성적
+              <select id="grade-score" name="gradeScore" required>
+                <option value="A+">A+</option>
+                <option value="A0">A0</option>
+                <option value="B+">B+</option>
+                <option value="B0">B0</option>
+                <option value="C+">C+</option>
+                <option value="C0">C0</option>
+                <option value="D+">D+</option>
+                <option value="D0">D0</option>
+                <option value="F">F</option>
+              </select>
+            </label>
+            <button type="submit">계산에 추가</button>
+          </form>
+
+          <div class="grade-panel">
+            <div class="gpa-total">
+              <span>평균 평점</span>
+              <strong id="gpa-total">0.00</strong>
+            </div>
+            <div id="grade-list" class="grade-list" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Friends: 친구 목록과 온라인 상태를 관리합니다. -->
+      <section id="friends" class="module-section">
+        <div class="section-heading">
+          <p class="eyebrow">Friends</p>
+          <h2>친구창</h2>
+        </div>
+
+        <div class="module-grid friends-layout">
+          <form id="friend-form" class="tool-panel stack-form">
+            <label>
+              친구 이름
+              <input id="friend-name" name="friendName" type="text" placeholder="김민지" required />
+            </label>
+            <label>
+              상태 메시지
+              <input id="friend-note" name="friendNote" type="text" placeholder="도서관에서 공부 중" required />
+            </label>
+            <button type="submit">친구 추가</button>
+          </form>
+
+          <div id="friend-list" class="friend-list" aria-live="polite"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Chatbot: 사진 속 KUChat처럼 오른쪽 아래에 떠 있는 원형 버튼에서 열립니다. -->
+    <button id="chat-backdrop" class="chat-backdrop" type="button" aria-label="챗봇 닫기"></button>
+    <div id="chat-widget" class="chat-widget" aria-label="챗봇 실행 버튼">
+      <button id="chat-widget-close" class="chat-widget-close" type="button" aria-label="챗봇 버튼 숨기기">×</button>
+      <button
+        id="chat-launcher"
+        class="chat-launcher"
+        type="button"
+        aria-label="캠퍼스 챗봇 열기"
+        aria-controls="chat-container"
+        aria-expanded="false"
+      >
+        <span class="chat-mascot" aria-hidden="true">
+          <span class="mascot-ear left"></span>
+          <span class="mascot-ear right"></span>
+          <span class="mascot-face">
+            <span class="mascot-eye left"></span>
+            <span class="mascot-eye right"></span>
+            <span class="mascot-mouth"></span>
+          </span>
+        </span>
+        <span class="chat-launcher-label">CM Chat</span>
+      </button>
+    </div>
+
+    <aside id="chat-container" class="chat-popover" aria-hidden="true" aria-label="챗봇" inert>
+      <div class="chat-drawer-header">
+        <div>
+          <p class="panel-kicker">Assistant</p>
+          <h2>캠퍼스 챗봇</h2>
+        </div>
+        <div class="chat-actions">
+          <span id="connection-status" class="status-badge">Mock API</span>
+          <button id="chat-close" class="icon-button" type="button" aria-label="챗봇 닫기">×</button>
+        </div>
+      </div>
+
+      <div id="message-list" class="message-list" aria-live="polite"></div>
+
+      <form id="chat-form" class="chat-form">
+        <label class="sr-only" for="chat-input">메시지 입력</label>
+        <textarea
+          id="chat-input"
+          name="message"
+          rows="3"
+          placeholder="시간표, 학점, 친구 관련 질문을 입력하세요"
+          required
+        ></textarea>
+        <button type="submit">전송</button>
+      </form>
+    </aside>
+
+    <footer class="site-footer">
+      <span>Campus Mate</span>
+      <span>2026 Student Portal Prototype</span>
+    </footer>
+
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>
